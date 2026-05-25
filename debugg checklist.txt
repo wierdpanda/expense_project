@@ -1,0 +1,9 @@
+Next time you’re stuck, your debugging checklist is now:
+
+1.Is the function being called?
+
+2.Is the returned value being stored?
+
+3.Is it later overwritten?
+
+4.Is it saved before program exit?
