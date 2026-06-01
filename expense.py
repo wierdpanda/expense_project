@@ -147,6 +147,13 @@ while True:
         #each category with its total expense
         if expense_choice == "1":
             
+            # >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+            # to help with confusion [] is not always for lists
+            #   Structure	Meaning of []
+            #   List	Position number (index)
+            #   Dictionary	Key lookup
+            #   String	Character position
+            # >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
             category_totals = {}
             for expense in expenses:
     
