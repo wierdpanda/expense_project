@@ -1,3 +1,14 @@
 {
-    "expenses": []
+    "expenses": [
+        [
+            "nat",
+            2,
+            "food"
+        ],
+        [
+            "z",
+            5,
+            "toys"
+        ]
+    ]
 }
