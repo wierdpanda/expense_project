@@ -1,14 +1,24 @@
 {
     "expenses": [
         [
-            "nat",
-            2,
+            "milk",
+            100,
             "food"
         ],
         [
-            "z",
-            5,
-            "toys"
+            "apple",
+            20,
+            "food"
+        ],
+        [
+            "uber",
+            40,
+            "transport"
+        ],
+        [
+            "work",
+            89,
+            "transport"
         ]
     ]
 }

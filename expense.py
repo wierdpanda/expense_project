@@ -121,9 +121,10 @@ while True:
         
 
 
-            #putting both variables into 1 list
+            #putting all 3 variables into 1 list
 
             expenses.append([name, int(amount), category])
+
 
             print(f"\nAdded {name} with amount R{amount} in the {category} category")
     #choice 2 to view all expenses under each other
@@ -145,7 +146,22 @@ while True:
 
         #each category with its total expense
         if expense_choice == "1":
-            print("We are still working on this option please select option 2 until we have implemented this feature")
+            
+            category_totals = {}
+            for expense in expenses:
+    
+                category = expense[2]
+                amount = expense[1]
+
+                if category not in category_totals:
+                    category_totals[category] = 0
+
+                category_totals[category] += amount
+
+            print("\nTotal spent by category:")
+
+            for category in category_totals:
+                print(f"{category} - R{category_totals[category]}")
 
         elif expense_choice == "2":    
             for expense in expenses:
