@@ -18,6 +18,7 @@ while True:
         if os.path.exists(SAVE_FILE):
             os.remove(SAVE_FILE)
             print("🗑️ Save data has been deleted.")
+            break
         else:
             print("ℹ️ No save file to delete.")
             break
