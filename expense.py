@@ -153,6 +153,12 @@ while True:
             #   List	Position number (index)
             #   Dictionary	Key lookup
             #   String	Character position
+
+            #You're using the dictionary lookup syntax, which happens to use square brackets too.
+            # This is one of those Python things that confuses almost everyone the first time they see it. The difference is determined by what the variable is:
+            # If expenses is a list, expenses[...] means list indexing.
+            # If category_totals is a dictionary, category_totals[...] means key lookup.
+            
             # >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
             category_totals = {}
             for expense in expenses:
