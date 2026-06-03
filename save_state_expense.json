@@ -1,0 +1,19 @@
+{
+    "expenses": [
+        [
+            "nat",
+            30,
+            "food"
+        ],
+        [
+            "zed",
+            90,
+            "food"
+        ],
+        [
+            "googoo",
+            4,
+            "transport"
+        ]
+    ]
+}

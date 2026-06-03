@@ -145,14 +145,22 @@ while True:
         if choice == "1":
 
             categories = []
+            number_count = 1
+
+            # For loop to create a categories list which will be used to create a visible list for user
             for expense in expenses:
 
                 category = expense[2]
+                
 
                 if category not in categories:
                     categories.append(category)
-            print(f"{categories}")
             
+            # For loop which creates the visible list for the user.
+            for category in categories:
+                print(f"{number_count}. {category}")
+                number_count += 1
+
         elif choice == "2":
             for expense in expenses:
                 print(f"{expense[0]} - R{expense[1]} on {expense[2]}")        
