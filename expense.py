@@ -77,14 +77,16 @@ while True:
     print("3. View total spent")
     print("4. Exit program")
 
-    choice = input("Please select an option: ")
+    choice = input("\nPlease select an option: \n")
 
-
-    #>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-
-    #inner loop for adding a name + expense amount + category
 
     #>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+
+    #Choice 1 inner loop for adding a name + expense amount + category
+
+    #>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+
+
     if choice == "1":
         while True:
             user_input = input("\nEnter expense name, amount and category (or q to return to previous menu): ")
@@ -117,7 +119,8 @@ while True:
             if amount <=0:
                 print("\nAmount must be above 0")
                 continue
-
+            
+            category = category.lower()
         
 
 
@@ -127,15 +130,39 @@ while True:
 
 
             print(f"\nAdded {name} with amount R{amount} in the {category} category")
+
+
+
+    #>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>        
     #choice 2 to view all expenses under each other
+    #>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>  
+
     elif choice == "2":
-        print("\nExpenses:")
-        for expense in expenses:
-            print(f"{expense[0]} - R{expense[1]} on {expense[2]}")
+        print("\n1.pick a category of expenses")
+        print("2.view all expenses to view")
+        choice = input("\nPlease select an option: \n")
+
+        if choice == "1":
+
+            categories = []
+            for expense in expenses:
+
+                category = expense[2]
+
+                if category not in categories:
+                    categories.append(category)
+            print(f"{categories}")
+            
+        elif choice == "2":
+            for expense in expenses:
+                print(f"{expense[0]} - R{expense[1]} on {expense[2]}")        
 
 
+    #>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>  
+    #Choice 3 view the total amount for alL expenses    
+    #>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>  
 
-    #view the total amount for alL expenses     
+
     elif choice == "3":
         total = 0
 
@@ -158,7 +185,7 @@ while True:
             # This is one of those Python things that confuses almost everyone the first time they see it. The difference is determined by what the variable is:
             # If expenses is a list, expenses[...] means list indexing.
             # If category_totals is a dictionary, category_totals[...] means key lookup.
-            
+
             # >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
             category_totals = {}
             for expense in expenses:
