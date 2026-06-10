@@ -1,0 +1,24 @@
+{
+    "expenses": [
+        [
+            "bread",
+            20,
+            "food"
+        ],
+        [
+            "work",
+            100,
+            "transport"
+        ],
+        [
+            "cheese",
+            35,
+            "food"
+        ],
+        [
+            "home",
+            120,
+            "transport"
+        ]
+    ]
+}

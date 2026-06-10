@@ -161,6 +161,8 @@ while True:
                 print(f"{number_count}. {category}")
                 number_count += 1
 
+                
+
         elif choice == "2":
             for expense in expenses:
                 print(f"{expense[0]} - R{expense[1]} on {expense[2]}")        
