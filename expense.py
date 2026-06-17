@@ -117,35 +117,48 @@ while True:
         # print(f"DEBUG: choice is '{choice}'")             this is a standard to help see if choice is actualy selected
 
         if choice == "1":
-            
-            categories = []
+                        
+            # sql loop to find and select categories
             number_count = 1
-            
-            # For loop to create a categories list which will be used to create a visible list for user
-            for expense in expenses:
+            cursor.execute(
+                "SELECT DISTINCT category FROM expenses"
+            )
 
-                category = expense[2]
-            
-                    
-                    
-                if category not in categories:
-                    categories.append(category)
-            
-
-            
-            # For loop which creates the visible list for the user.
+            categories = cursor.fetchall()
             for category in categories:
-                print(f"{number_count}. {category}")
+                print(f"{number_count}. {category[0]}")
+
                 number_count += 1
+
+            # For loop which creates the visible list for the user.
+           
+           
                 
-            choice = input("please select category (Hi this choice is currently not working and anything typed here will take you back to the menu. Please be patient while we install this feature)")
-            
+            choice = int(input("please select category "))
+            selected_category = categories[choice -1][0]
+
+            cursor.execute(
+                """
+                SELECT * FROM expenses
+                WHERE category = ?
+                """,
+                (selected_category,)
+            )
+
+            filtered_expenses = cursor.fetchall()
+            for expense in filtered_expenses:
+                print(f"{expense[1]}- R{expense[2]} on {expense[3]}")            
 
                 
 
         elif choice == "2":
+
+            cursor.execute("SELECT * FROM expenses")
+
+            expenses = cursor.fetchall()
+
             for expense in expenses:
-                print(f"{expense[0]} - R{expense[1]} on {expense[2]}")        
+                print(f"{expense[1]} - R{expense[2]} on {expense[3]}")        
 
 
     #>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>  

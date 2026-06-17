@@ -1,8 +1,10 @@
 # expense_project
 
-<!-- when updating new code eiuther test with the batch file or update the .exe with 
+<!-- when updating new code either test with the batch file or update the .exe with 
 
 pyinstaller --onefile expense.py
+
+
 SQL commands irud/crud
 
 Insert/create:
@@ -21,9 +23,27 @@ Delete:
 
 DELETE
 
-These four commands will cover about 90% of your Expense Tracker.
+some basic sql commands and meanings/usages
+
+conn
+│
+└── Connection to database
+
+cursor
+│
+└── Runs SQL commands
+
+execute()
+│
+└── Sends SQL to database
+
+fetchall()
+│
+└── Gets results back
 
 
+SELECT * FROM expenses
 
+the * means to give me/call everything from that database
 
  -->
