@@ -1,61 +1,24 @@
-import json
-import os
+# Importing and connecting sqlite database
 
-# ================
-# File settings
-# ================
+import sqlite3
 
-SAVE_FILE = "save_state_expense.json"
+conn = sqlite3.connect("expense.db")
+cursor = conn.cursor()
 
+cursor.execute("""
+CREATE TABLE IF NOT EXISTS expenses (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    name TEXT,
+    amount REAL,
+    category TEXT
+)
+"""
+)
 
-# =====================
-# CLEAR SAVE PROMPT
-# =====================
-
-while True:
-    choice = input("Do you wish to load previous save data? (Y/N) " \
-    "\nNote failure to load previous data will result in deleting old data and starting from scratch\n").lower()
-    if choice == "n":
-        if os.path.exists(SAVE_FILE):
-            os.remove(SAVE_FILE)
-            print("🗑️ Save data has been deleted.")
-            break
-        else:
-            print("ℹ️ No save file to delete.")
-            break
-    elif choice =="y":
-        print("Continueing with existing data.")
-        break
-    else:
-        print("please type 'y' or 'n'.")    
+conn.commit()
 
 
 
-# =====================
-# LOAD STATE
-# =====================
-
-def load_state():
-    if os.path.exists(SAVE_FILE):
-        with open(SAVE_FILE, "r") as file:
-            data = json.load(file)
-        print("✅Loaded saved data")
-        return data["expenses"]
-
-    else:
-        print("⚠️ No save file found. Starting fresh.")
-        expenses = []
-        return expenses
-
-# =====================
-# SAVE STATE
-# =====================
-def save_state(expenses):
-    data = {
-        "expenses": expenses}
-    with open(SAVE_FILE, "w") as file:
-        json.dump(data, file, indent=4)
-    print(f"💾 State saved to {os.path.abspath(SAVE_FILE)}")
 
 
 # >>>>>>>>>>>>>>>>>>>>>>>>>>>>
@@ -66,12 +29,13 @@ def save_state(expenses):
 
 
 #1 list within list to link variables together
-expenses = load_state()
+
 
 
 #Outer loop for main program
 while True:
     print("\nWelcome to Nat's expense tracker")
+    print("Only the create and read features of CRUD are currently working with the update and delete features to still be done ")
     print("1. Add expense name, amount and Category")
     print("2. View expenses")
     print("3. View total spent")
@@ -126,7 +90,15 @@ while True:
 
             #putting all 3 variables into 1 list
 
-            expenses.append([name, int(amount), category])
+            cursor.execute(
+                """
+                INSERT INTO expenses (name, amount, category)
+                VALUES (?,?,?)
+                """,
+                (name, amount, category)
+            )
+
+            conn.commit()
 
 
             print(f"\nAdded {name} with amount R{amount} in the {category} category")
@@ -142,24 +114,32 @@ while True:
         print("2.view all expenses to view")
         choice = input("\nPlease select an option: \n")
 
-        if choice == "1":
+        # print(f"DEBUG: choice is '{choice}'")             this is a standard to help see if choice is actualy selected
 
+        if choice == "1":
+            
             categories = []
             number_count = 1
-
+            
             # For loop to create a categories list which will be used to create a visible list for user
             for expense in expenses:
 
                 category = expense[2]
-                
-
+            
+                    
+                    
                 if category not in categories:
                     categories.append(category)
+            
+
             
             # For loop which creates the visible list for the user.
             for category in categories:
                 print(f"{number_count}. {category}")
                 number_count += 1
+                
+            choice = input("please select category (Hi this choice is currently not working and anything typed here will take you back to the menu. Please be patient while we install this feature)")
+            
 
                 
 
