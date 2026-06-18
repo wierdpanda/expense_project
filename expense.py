@@ -37,7 +37,7 @@ while True:
     print("\nWelcome to Nat's expense tracker")
     print("Only the create and read features of CRUD are currently working with the update and delete features to still be done ")
     print("1. Add expense name, amount and Category")
-    print("2. View expenses")
+    print("2. View individual expenses")
     print("3. View total spent")
     print("4. Exit program")
 
@@ -50,7 +50,10 @@ while True:
 
     #>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
-
+    # =======================================================================================
+    # CHOICE 1. Add expense name, amount and Category
+    # SUBCHOICE 1.Enter expense name, amount and category (or q to return to previous menu): 
+    # =======================================================================================
     if choice == "1":
         while True:
             user_input = input("\nEnter expense name, amount and category (or q to return to previous menu): ")
@@ -68,11 +71,11 @@ while True:
             amount = parts[1]
             category = parts[2]
 
-            #>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+            #-------------------------------
 
             #Rules for amount  inputs  START
 
-            #>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+            #-------------------------------
 
             #ensure amount input is a number
             if not amount.lstrip("-").isdigit():
@@ -109,13 +112,27 @@ while True:
     #choice 2 to view all expenses under each other
     #>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>  
 
+
     elif choice == "2":
-        print("\n1.pick a category of expenses")
-        print("2.view all expenses to view")
+        print("\n1.Pick a category of expenses")
+        print("2.View all expenses")
+        print("q to return to main menu")
         choice = input("\nPlease select an option: \n")
 
         # print(f"DEBUG: choice is '{choice}'")             this is a standard to help see if choice is actualy selected
 
+
+    # =====================================
+    # CHOICE 2. View individual expenses
+    # SUBCHOICE q to return to main menu
+    # =====================================
+        if input == "q":
+                break
+        
+        # =====================================
+        # CHOICE 2. View individual expenses
+        # SUBCHOICE 1.pick a category of expenses
+        # =====================================
         if choice == "1":
                         
             # sql loop to find and select categories
@@ -125,18 +142,21 @@ while True:
             )
 
             categories = cursor.fetchall()
+
+            # For loop which creates the visible list for the user.
             for category in categories:
                 print(f"{number_count}. {category[0]}")
 
                 number_count += 1
 
-            # For loop which creates the visible list for the user.
+            
            
            
                 
-            choice = int(input("please select category "))
+            choice = int(input("please select category via a number or "))
+           
             selected_category = categories[choice -1][0]
-
+ 
             cursor.execute(
                 """
                 SELECT * FROM expenses
@@ -149,8 +169,11 @@ while True:
             for expense in filtered_expenses:
                 print(f"{expense[1]}- R{expense[2]} on {expense[3]}")            
 
-                
-
+              
+        # ==================================
+        # CHOICE 2. View individual expenses
+        # SUBCHOICE 2.view all expenses
+        # ==================================
         elif choice == "2":
 
             cursor.execute("SELECT * FROM expenses")
@@ -162,7 +185,7 @@ while True:
 
 
     #>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>  
-    #Choice 3 view the total amount for alL expenses    
+    #Choice 3 view the total amount for all expenses    
     #>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>  
 
 
@@ -174,7 +197,13 @@ while True:
 
         expense_choice=input("Please select an option:")
 
-        #each category with its total expense
+
+        # ===============
+        # CHOICE 3. View total spent
+        # SUBCHOICE 1.Total for each category
+        # ===============
+
+        
         if expense_choice == "1":
             
             # >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
@@ -190,29 +219,57 @@ while True:
             # If category_totals is a dictionary, category_totals[...] means key lookup.
 
             # >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-            category_totals = {}
-            for expense in expenses:
-    
-                category = expense[2]
-                amount = expense[1]
 
-                if category not in category_totals:
-                    category_totals[category] = 0
+            cursor.execute(
+                """
+                SELECT category, SUM(amount) AS total
+                FROM expenses
+                GROUP BY category
+                """,
+            )
 
-                category_totals[category] += amount
+            results = cursor.fetchall()
 
-            print("\nTotal spent by category:")
+            for category, total in results:
+                print(f"{category}: R{total}")
 
-            for category in category_totals:
-                print(f"{category} - R{category_totals[category]}")
 
-        elif expense_choice == "2":    
-            for expense in expenses:
-                total += expense[1]
-            print(f"\nTotal spent: R{total} \n")
+
+           
+
+
+        # ===============
+        # CHOICE 3. View total spent
+        # SUBCHOICE 2.Total for all categories
+        # ===============        
+
+        elif expense_choice == "2":
+            # FIrst simpler way to do it to call with SQL and do math with python
+            # expense_total = 0
+
+            # cursor.execute(  
+            #     "SELECT * FROM expenses",)
+            
+            # expenses = cursor.fetchall()
+            
+            # for expense in expenses:
+            #     expense_total += expense[2]
+            # print(f"\nTotal spent: R{expense_total} \n")
+
+            # This way lets SQL call and do the math saving processing time + making code neater
+            cursor.execute("SELECT SUM(amount) FROM expenses")
+            
+            expense_total = cursor.fetchone()[0]
+
+            print(f"\nTotal spent: R{expense_total}")
             print("Returning to main menu.\n")
     #this closes the program
     elif choice == "4":
-        save_state(expenses)
         print("Goodbye!")
         break
+
+
+
+
+
+
