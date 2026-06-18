@@ -1,5 +1,5 @@
 # Importing and connecting sqlite database
-
+import os
 import sqlite3
 
 conn = sqlite3.connect("expense.db")
@@ -16,6 +16,7 @@ CREATE TABLE IF NOT EXISTS expenses (
 )
 
 conn.commit()
+print(os.path.abspath("expenses.db"))
 
 
 
@@ -56,7 +57,7 @@ while True:
     # =======================================================================================
     if choice == "1":
         while True:
-            user_input = input("\nEnter expense name, amount and category (or q to return to previous menu): ")
+            user_input = input("\nEnter expense name, amount and category (or q to return to previous menu):")
             #back to previous menu input
             if user_input == "q":
                 break
