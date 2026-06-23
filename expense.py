@@ -32,22 +32,24 @@ print(os.path.abspath("expenses.db"))
 #1 list within list to link variables together
 
 
-
-#Outer loop for main program
+#====================
+#Start of Application
+#====================
 while True:
     print("\nWelcome to Nat's expense tracker")
     print("Only the create and read features of CRUD are currently working with the update and delete features to still be done ")
     print("1. Add expense name, amount and Category")
     print("2. View individual expenses")
     print("3. View total spent")
-    print("4. Exit program")
 
-    choice = input("\nPlease select an option: \n")
+    print("q. Exit program")
+
+    choice = input("\nPlease select an option: \n").lower()
 
 
     #>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
-    #Choice 1 inner loop for adding a name + expense amount + category
+    #When choice 1 is picked
 
     #>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
@@ -221,6 +223,7 @@ while True:
 
             # >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
+
             cursor.execute(
                 """
                 SELECT category, SUM(amount) AS total
@@ -264,11 +267,29 @@ while True:
 
             print(f"\nTotal spent: R{expense_total}")
             print("Returning to main menu.\n")
-    #this closes the program
+
+
+
+
+
+
+
     elif choice == "4":
+        print("hello")        
+
+    #>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>  
+    #Choice q ends and closes program    
+    #>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>          
+    #this closes the program
+    elif choice == "q":
         print("Goodbye!")
         break
 
+    #>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>  
+    #this forces numbered choices or q/Q to quit    
+    #>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+    else: 
+        print("Please select a number from 1-5 or q/Q")
 
 
 
